@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #09090b; /* Modern Dark/Zinc-950 */
+  --color-secondary: #ffffff; /* White */
+  --color-accent: #facc15; /* Modern Yellow-400 */
+  --color-accent-hover: #eab308; /* Yellow-600 */
+  
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-accent hover:bg-accent-hover text-primary px-6 py-3 rounded-lg font-bold transition-all duration-200 inline-block text-center;
+  }
+  .btn-outline {
+    @apply border-2 border-accent text-accent hover:bg-accent hover:text-primary px-6 py-3 rounded-lg font-bold transition-all duration-200 inline-block text-center;
+  }
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+  .container-custom {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Navigation Dropdown Menu Styles */
+  .nav-dropdown-item {
+    @apply text-black bg-white hover:bg-gray-100 px-4 py-3 font-semibold transition-all duration-200 block w-full text-left border-b border-gray-50;
+    color: #000000 !important; /* Ensure absolute black as requested */
+  }
+  
+  .nav-dropdown-item:hover {
+    @apply bg-gray-100;
+    background-color: #f3f4f6 !important; /* Subtle light gray hover */
+  }
+}
