@@ -40,6 +40,7 @@ const Navbar = () => {
     { name: 'Home', href: '#home' },
     { name: 'Services', href: '#services' },
     { name: 'About', href: '#about' },
+    { name: 'Our Work', href: '#gallery' },
     { name: 'Service Areas', href: '#areas' },
     { name: 'Reviews', href: '#reviews' },
     { name: 'Contact', href: '#contact' },
@@ -119,13 +120,12 @@ const Navbar = () => {
 const Hero = () => {
   return (
     <section id="home" className="relative min-h-screen flex items-center pt-20 overflow-hidden">
-      {/* Background Image with Overlay */}
+      {/* Background Image - YOUR real job photo */}
       <div className="absolute inset-0 z-0">
         <img 
-          src="https://images.unsplash.com/photo-1635424710928-0544e8512eae?auto=format&fit=crop&q=80&w=2000" 
+          src="/job1.jpg"
           alt="Professional Roofing Service Reisterstown MD" 
           className="w-full h-full object-cover"
-          referrerPolicy="no-referrer"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
       </div>
@@ -170,7 +170,7 @@ const Hero = () => {
           </div>
         </motion.div>
 
-        {/* Quick Form or Image */}
+        {/* Quick Contact Form */}
         <motion.div 
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -216,12 +216,6 @@ const TrustSection = () => {
               <div className="text-gray-600 font-semibold text-sm uppercase tracking-wider">{stat.label}</div>
             </div>
           ))}
-        </div>
-        <div className="mt-12 flex flex-wrap justify-center items-center gap-8 opacity-50 grayscale hover:grayscale-0 transition-all duration-300">
-          <img src="https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?auto=format&fit=crop&q=80&w=120" alt="GAF Certified" className="h-10 rounded" />
-          <img src="https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?auto=format&fit=crop&q=80&w=120" alt="BBB Accredited" className="h-10 rounded" />
-          <img src="https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?auto=format&fit=crop&q=80&w=120" alt="Owens Corning" className="h-10 rounded" />
-          <img src="https://images.unsplash.com/photo-1517646287270-a5a9ca602e5c?auto=format&fit=crop&q=80&w=120" alt="CertainTeed" className="h-10 rounded" />
         </div>
       </div>
     </div>
@@ -343,15 +337,96 @@ const WhyChooseUs = () => {
         </div>
         <div className="relative">
           <img 
-            src="https://images.unsplash.com/photo-1632759162352-f1099839479b?auto=format&fit=crop&q=80&w=800" 
-            alt="Montebello Roofing Team" 
+            src="/job2.jpg"
+            alt="Montebello Roofing Team at Work" 
             className="rounded-2xl shadow-2xl w-full h-[600px] object-cover"
-            referrerPolicy="no-referrer"
           />
           <div className="absolute -bottom-8 -left-8 bg-accent p-8 rounded-2xl hidden md:block">
             <div className="text-5xl font-black mb-1">100%</div>
             <div className="text-sm font-bold uppercase tracking-widest">Satisfaction Guaranteed</div>
           </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+// --- NEW PHOTO GALLERY SECTION ---
+const Gallery = () => {
+  // Update this list if you add more photos later
+  const photos = [
+    { src: '/job1.jpg', alt: 'Roofing job completed in Reisterstown MD' },
+    { src: '/job2.jpg', alt: 'Residential roof replacement Baltimore County' },
+    { src: '/job3.jpg', alt: 'Roof repair completed in 21136' },
+    { src: '/job4.jpg', alt: 'New shingle installation Reisterstown' },
+    { src: '/job5.jpg', alt: 'Commercial roofing project Baltimore County' },
+    { src: '/job6.jpg', alt: 'Storm damage roof repair Maryland' },
+  ];
+
+  const [selected, setSelected] = useState<string | null>(null);
+
+  return (
+    <section id="gallery" className="section-padding bg-white">
+      <div className="container-custom">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-accent font-bold uppercase tracking-widest mb-4">Our Work</h2>
+          <h3 className="text-3xl md:text-5xl font-black text-primary mb-6">Real Jobs. Real Results.</h3>
+          <p className="text-gray-600 text-lg">
+            Every roof we install or repair is a reflection of our commitment to quality craftsmanship in Reisterstown and Baltimore County.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+          {photos.map((photo, idx) => (
+            <motion.div
+              key={idx}
+              whileHover={{ scale: 1.02 }}
+              className="relative overflow-hidden rounded-2xl cursor-pointer aspect-square shadow-md"
+              onClick={() => setSelected(photo.src)}
+            >
+              <img
+                src={photo.src}
+                alt={photo.alt}
+                className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+              />
+              <div className="absolute inset-0 bg-primary/0 hover:bg-primary/20 transition-all duration-300 flex items-center justify-center">
+                <span className="text-white text-sm font-bold opacity-0 hover:opacity-100 transition-opacity duration-300">View Photo</span>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+
+        {/* Lightbox */}
+        <AnimatePresence>
+          {selected && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
+              onClick={() => setSelected(null)}
+            >
+              <button
+                className="absolute top-6 right-6 text-white bg-white/20 rounded-full p-2 hover:bg-white/40 transition-colors"
+                onClick={() => setSelected(null)}
+              >
+                <X className="w-6 h-6" />
+              </button>
+              <motion.img
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0.8 }}
+                src={selected}
+                alt="Roofing job"
+                className="max-w-full max-h-[85vh] rounded-xl object-contain"
+                onClick={e => e.stopPropagation()}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div className="text-center mt-12">
+          <a href="#contact" className="btn-primary px-10 text-lg">Get a Free Estimate</a>
         </div>
       </div>
     </section>
@@ -445,7 +520,6 @@ const ServiceAreas = () => {
           </div>
         </div>
         <div className="rounded-2xl overflow-hidden shadow-2xl h-[400px] border-4 border-white">
-          {/* Placeholder for Google Maps */}
           <iframe 
             src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d49247.44754854553!2d-76.8677!3d39.4668!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c83e2e2e2e2e2e%3A0x2e2e2e2e2e2e2e2e!2sReisterstown%2C%20MD%2021136!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" 
             width="100%" 
@@ -617,6 +691,7 @@ const Footer = () => {
               <li><a href="#home" className="hover:text-accent transition-colors">Home</a></li>
               <li><a href="#services" className="hover:text-accent transition-colors">Our Services</a></li>
               <li><a href="#about" className="hover:text-accent transition-colors">About Us</a></li>
+              <li><a href="#gallery" className="hover:text-accent transition-colors">Our Work</a></li>
               <li><a href="#areas" className="hover:text-accent transition-colors">Service Areas</a></li>
               <li><a href="#reviews" className="hover:text-accent transition-colors">Customer Reviews</a></li>
               <li><a href="#contact" className="hover:text-accent transition-colors">Contact Us</a></li>
@@ -697,6 +772,7 @@ export default function App() {
       <TrustSection />
       <Services />
       <WhyChooseUs />
+      <Gallery />
       <Reviews />
       <ServiceAreas />
       <FAQ />
